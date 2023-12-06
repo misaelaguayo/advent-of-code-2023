@@ -23,16 +23,23 @@ def getLowestLocation(
     lightTemperatureMap,
     temperatureHumidityMap,
     humidityLocationMap):
+        seedsMemo = {}
         res = float('inf')
-        for seed in seedsArray:
-            soil = getMappedValues(seedSoilMap, seed)
-            fertilizer = getMappedValues(soilFertilizerMap, soil)
-            water = getMappedValues(fertilizerWaterMap, fertilizer)
-            light = getMappedValues(waterLightMap, water)
-            temperature = getMappedValues(lightTemperatureMap, light)
-            humidity = getMappedValues(temperatureHumidityMap, temperature)
-            location = getMappedValues(humidityLocationMap, humidity)
-            res = min(res, location)
+        for i in range(0, len(seedsArray), 2):
+            startSeed, endSeed = seedsArray[i], seedsArray[i+1]
+            for seed in range(startSeed, startSeed + endSeed):
+                if seed in seedsMemo:
+                    location = seedsMemo[seed]
+                else:
+                    soil = getMappedValues(seedSoilMap, seed)
+                    fertilizer = getMappedValues(soilFertilizerMap, soil)
+                    water = getMappedValues(fertilizerWaterMap, fertilizer)
+                    light = getMappedValues(waterLightMap, water)
+                    temperature = getMappedValues(lightTemperatureMap, light)
+                    humidity = getMappedValues(temperatureHumidityMap, temperature)
+                    location = getMappedValues(humidityLocationMap, humidity)
+                    seedsMemo[seed] = location
+                res = min(res, location)
         return res
 
 
@@ -112,3 +119,4 @@ print(getLowestLocation(seeds,
         lightTemperatureMap,
         temperatureHumidityMap,
         humidityLocationMap))
+
