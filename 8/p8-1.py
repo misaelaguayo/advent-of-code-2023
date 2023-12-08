@@ -17,16 +17,15 @@ def createMap(lines):
     return networkMap
 
 
-def findSolution(steps, lines, networkMap):
+def findSolution(steps, networkMap):
     res = 0
-    curr = lines[2][:3]
+    curr = "AAA"
     while curr != "ZZZ":
         for step in steps:
             if step == "R":
                 curr = networkMap[curr][1]
             elif step == "L":
                 curr = networkMap[curr][0]
-            print(curr)
             res += 1
     return res
 
@@ -35,4 +34,4 @@ lines = [line.strip() for line in lines]
 steps = lines[0]
 
 networkMap = createMap(lines[2:])
-print(findSolution(steps, lines, networkMap))
+print(findSolution(steps, networkMap))
