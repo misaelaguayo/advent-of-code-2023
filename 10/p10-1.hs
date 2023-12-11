@@ -41,18 +41,12 @@ getLoopLength' ls (row, col) res prev
 
 isValidPipe :: [String] -> (Int, Int) -> Char -> Bool
 isValidPipe ls (row, col) prev
-    | ls !! row !! col == '|' && prev == 'U' = True
-    | ls !! row !! col == '|' && prev == 'D' = True
-    | ls !! row !! col == '-' && prev == 'L' = True
-    | ls !! row !! col == '-' && prev == 'R' = True
-    | ls !! row !! col == 'L' && prev == 'D' = True
-    | ls !! row !! col == 'L' && prev == 'L' = True
-    | ls !! row !! col == 'J' && prev == 'D' = True
-    | ls !! row !! col == 'J' && prev == 'R' = True
-    | ls !! row !! col == '7' && prev == 'R' = True
-    | ls !! row !! col == '7' && prev == 'U' = True
-    | ls !! row !! col == 'F' && prev == 'L' = True
-    | ls !! row !! col == 'F' && prev == 'U' = True
+    | ls !! row !! col == '|' && (prev == 'U' || prev == 'D') = True
+    | ls !! row !! col == '-' && (prev == 'L' || prev == 'R') = True
+    | ls !! row !! col == 'L' && (prev == 'D' || prev == 'L') = True
+    | ls !! row !! col == 'J' && (prev == 'D' || prev == 'R') = True
+    | ls !! row !! col == '7' && (prev == 'R' || prev == 'U') = True
+    | ls !! row !! col == 'F' && (prev == 'L' || prev == 'U') = True
     | otherwise = False
 
 getLoopLength :: [String] -> (Int, Int) -> Int
